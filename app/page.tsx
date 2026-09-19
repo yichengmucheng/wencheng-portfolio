@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { ProjectCard } from "@/components/project-card";
-import { articles, getPublicationPlatform, projects } from "@/lib/content";
+import { getPublicationPlatform, projects } from "@/lib/content";
+import { getPublishedArticles } from "@/lib/publications";
 
-export default function Home() {
+export const revalidate = 3600;
+
+export default async function Home() {
+  const articles = (await getPublishedArticles()).slice(0, 3);
   return (
     <>
       <section className="hero">
@@ -46,7 +50,7 @@ export default function Home() {
 
       <section className="section writing-preview">
         <div className="section-title-row"><div><p className="eyebrow">MUCHENG INTELLIGENCE REVIEW</p><h2>木成智序</h2></div><Link className="text-link" href="/writing">进入内容中心 →</Link></div>
-        <div className="article-grid">{articles.map((article) => <Link href={`/writing/${article.slug}`} key={article.slug} className="article-card"><p>{article.date} · {article.readingTime}</p><h3>{article.title}</h3><span>{article.excerpt}</span><small className="article-channel-mini">{article.channels.map((channel) => getPublicationPlatform(channel.platform)?.shortName).filter(Boolean).join(" · ")}</small><b>阅读文章 →</b></Link>)}</div>
+        <div className="article-grid">{articles.map((article) => <a href={article.url} target="_blank" rel="noreferrer" key={article.id} className="article-card"><p>{article.date} · {article.source}</p><h3>{article.title}</h3><span>{article.excerpt}</span><small className="article-channel-mini">{article.channels.map((channel) => getPublicationPlatform(channel.platform)?.shortName).filter(Boolean).join(" · ")}</small><b>前往原文 →</b></a>)}</div>
       </section>
     </>
   );

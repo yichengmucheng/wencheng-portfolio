@@ -1,23 +1,29 @@
-# 内容中心维护说明
+# 内容中心同步说明
 
-网站的文章正文、标签与发布渠道统一维护在 `lib/content.ts`。
+内容中心现在只展示真实发布内容，不再维护示例文章或虚构的站内正文。
 
-## 新增文章
+## 已接入：CSDN RSS
 
-在 `articles` 数组中复制一篇文章对象，并修改：
+- 账号：`CCAI笔记`（ID：`2402_82548201`）
+- 数据源：`https://blog.csdn.net/2402_82548201/rss/list`
+- 更新频率：网站最多缓存一小时，之后的首次访问会检查新文章。
+- 自动获取：真实标题、摘要、发布日期和原文链接。
+- 同步代码：`lib/publications.ts`
 
-- `slug`：英文短链接，保持唯一。
-- `title`、`excerpt`、`date`、`readingTime`、`tags`。
-- `intro` 与 `sections`：官网保存的完整版本。
-- `channels`：这篇文章已经发布的平台。
+如果 RSS 暂时不可访问，网站会使用最近一次确认过的真实文章作为兜底，不会生成假内容。
 
-## 添加外部文章链接
+## 待绑定的平台
 
-渠道未填写 `url` 时，网站只显示“已发布”状态，不会跳转到虚构地址。拿到真实链接后按下面格式补充：
+- 微信公众号：木成智序
+- 小红书：CC AI（小红书号 `6122121179`）
+- 知乎：木成智序
+
+这些平台没有从截图中暴露唯一的公开主页或文章 URL。绑定时只需要复制浏览器地址栏中的公开链接，不需要提供正文，更不需要账号密码。
+
+同一篇文章的其他平台链接会合并到 `channels`：
 
 ```ts
 channels: [
-  { platform: "site" },
   { platform: "wechat", url: "https://mp.weixin.qq.com/s/..." },
   { platform: "xiaohongshu", url: "https://www.xiaohongshu.com/explore/..." },
   { platform: "csdn", url: "https://blog.csdn.net/..." },
@@ -25,18 +31,6 @@ channels: [
 ]
 ```
 
-支持的平台标识：
+## 部署流程
 
-- `site`：木成智序官网
-- `wechat`：微信公众号
-- `xiaohongshu`：小红书
-- `csdn`：CSDN
-- `zhihu`：知乎
-
-## 发布流程
-
-1. 在 `lib/content.ts` 更新文章与渠道链接。
-2. 本地运行 `pnpm run build`。
-3. 提交并推送到 GitHub 的 `main` 分支。
-4. Vercel 会自动构建并更新线上网站。
-
+代码推送到 GitHub `main` 分支后，Vercel 会自动构建。新 CSDN 文章不需要重新提交代码，会通过 RSS 定时进入内容中心。

@@ -14,6 +14,7 @@ export type PublicationPlatform = {
   shortName: string;
   role: string;
   accent: string;
+  syncStatus: string;
 };
 
 export type ArticleChannel = {
@@ -22,11 +23,11 @@ export type ArticleChannel = {
 };
 
 export const publicationPlatforms: PublicationPlatform[] = [
-  { id: "site", name: "木成智序", shortName: "智序", role: "完整原文与统一索引", accent: "mint" },
-  { id: "wechat", name: "微信公众号", shortName: "微信", role: "深度长文与系列沉淀", accent: "green" },
-  { id: "xiaohongshu", name: "小红书", shortName: "小红书", role: "图文卡片与观点摘要", accent: "red" },
-  { id: "csdn", name: "CSDN", shortName: "CSDN", role: "技术实践与工程复盘", accent: "orange" },
-  { id: "zhihu", name: "知乎", shortName: "知乎", role: "问题拆解与观点讨论", accent: "blue" },
+  { id: "site", name: "木成智序", shortName: "索引", role: "跨平台内容索引", accent: "mint", syncStatus: "统一归档" },
+  { id: "wechat", name: "微信公众号", shortName: "微信", role: "木成智序 · 深度长文", accent: "green", syncStatus: "接口待绑定" },
+  { id: "xiaohongshu", name: "小红书", shortName: "小红书", role: "CC AI · 图文摘要", accent: "red", syncStatus: "主页待绑定" },
+  { id: "csdn", name: "CSDN", shortName: "CSDN", role: "CCAI笔记 · 技术实践", accent: "orange", syncStatus: "RSS 自动同步" },
+  { id: "zhihu", name: "知乎", shortName: "知乎", role: "木成智序 · 观点讨论", accent: "blue", syncStatus: "主页待绑定" },
 ];
 
 export type Project = {
@@ -223,60 +224,6 @@ export const projects: Project[] = [
   },
 ];
 
-export const articles = [
-  {
-    slug: "agent-risk-gates",
-    title: "企业 Agent 的写操作，为什么不能只靠一句确认",
-    excerpt: "从身份、参数绑定、幂等到证据回执，拆解可控执行的产品机制。",
-    date: "2026.09",
-    readingTime: "6 分钟",
-    tags: ["Agent", "安全", "产品设计"],
-    channels: [
-      { platform: "site" },
-      { platform: "wechat" },
-      { platform: "xiaohongshu" },
-      { platform: "csdn" },
-      { platform: "zhihu" },
-    ] satisfies ArticleChannel[],
-    intro: "当 Agent 开始发消息、创建任务或修改文档时，错误不再只是一次坏回答，而可能成为真实业务事故。",
-    sections: [
-      { heading: "Prompt 不是安全边界", body: "模型可以理解规则，却不适合成为权限与执行状态的唯一真相源。重试、参数变化和提示注入都可能让一句“请先确认”失效。" },
-      { heading: "确认必须绑定具体动作", body: "有效确认至少要绑定操作者、目标、完整参数摘要、过期时间和幂等键。任何内容变化都应使旧确认失效。" },
-      { heading: "执行以后还需要证据", body: "用户需要知道系统实际做了什么、影响了谁、是否成功以及如何重试。Evidence 既是用户回执，也是后续评测和事故追溯的输入。" },
-    ],
-  },
-  {
-    slug: "rag-evaluation",
-    title: "RAG 评测不该只盯着最终答案",
-    excerpt: "把知识接入、召回、上下文和生成拆成可定位的问题层级。",
-    date: "2026.08",
-    readingTime: "5 分钟",
-    tags: ["RAG", "Evaluation", "知识库"],
-    channels: [{ platform: "site" }] satisfies ArticleChannel[],
-    intro: "一个看起来正确的答案，可能来自错误文档、模型常识或偶然命中；一个错误答案，也可能是源文档缺失而不是模型能力不足。",
-    sections: [
-      { heading: "先判断知识是否存在", body: "评测应先确认目标事实是否被成功解析、切片并建立索引。知识未入库时，调 Prompt 没有意义。" },
-      { heading: "召回与生成分开看", body: "记录目标片段是否进入 Top-K、Rerank 后是否保留、上下文是否完整，再判断回答的忠实性和引用准确性。" },
-      { heading: "把失败样本变成产品资产", body: "每次线上异常都应归类为解析、召回、排序、生成或交互问题，并沉淀进可重复运行的测试集。" },
-    ],
-  },
-  {
-    slug: "model-delivery-contract",
-    title: "模型上线不是传一个文件，而是交付一组契约",
-    excerpt: "为什么输入、环境、金标准样例和业务评分必须跟模型一起走。",
-    date: "2026.07",
-    readingTime: "7 分钟",
-    tags: ["模型平台", "MLOps", "产品架构"],
-    channels: [{ platform: "site" }] satisfies ArticleChannel[],
-    intro: "模型在训练环境表现正常，并不代表它在生产系统中会得到相同结果。最危险的错误通常发生在模型文件之外。",
-    sections: [
-      { heading: "模型文件缺少业务语义", body: "特征顺序、缺失值规则、正类定义、版本和概率到业务分的映射往往散落在代码或口头交接中。" },
-      { heading: "金标准用例让目标环境能够自证", body: "交付包应携带代表性输入、期望概率、期望业务分和生成环境。目标环境必须独立运行并给出一致性报告。" },
-      { heading: "契约也是产品边界", body: "训练平台负责产出什么、部署平台验证什么、业务方批准什么，都应由清晰的数据契约和状态机表达。" },
-    ],
-  },
-] as const;
-
 export const labItems = [
   {
     type: "Tool",
@@ -304,16 +251,12 @@ export const labItems = [
     title: "企业能力目录",
     summary: "以能力、权限、风险、输入输出和版本为字段组织 MCP 与内部工具。",
     status: "设计中",
-    href: "/writing/agent-risk-gates",
+    href: "/projects/enterprise-agent-hub",
   },
 ] as const;
 
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug);
-}
-
-export function getArticle(slug: string) {
-  return articles.find((article) => article.slug === slug);
 }
 
 export function getPublicationPlatform(id: PublicationPlatformId) {

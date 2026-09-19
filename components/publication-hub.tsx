@@ -1,15 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { ArticleChannel, PublicationPlatform, PublicationPlatformId } from "@/lib/content";
 
 type HubArticle = {
-  slug: string;
+  id: string;
   title: string;
   excerpt: string;
   date: string;
-  readingTime: string;
+  source: string;
+  url: string;
   tags: readonly string[];
   channels: readonly ArticleChannel[];
 };
@@ -26,7 +26,7 @@ export function PublicationHub({
   const [active, setActive] = useState<FilterId>("all");
 
   const visibleArticles = useMemo(
-    () => active === "all" ? articles : articles.filter((article) => article.channels.some((channel) => channel.platform === active)),
+    () => active === "all" || active === "site" ? articles : articles.filter((article) => article.channels.some((channel) => channel.platform === active)),
     [active, articles],
   );
 
@@ -43,11 +43,11 @@ export function PublicationHub({
             <p className="eyebrow">CONTENT NETWORK</p>
             <h2 id="channel-network-title">一个内容源，多平台表达</h2>
           </div>
-          <p>官网保存完整版本与作品证据；各平台根据阅读场景承载长文、图解、技术复盘和观点讨论。</p>
+          <p>官网负责统一索引；标题、摘要、发布日期和跳转地址均来自已验证的公开来源，不再生成示例正文。</p>
         </div>
         <div className="channel-grid">
           {platforms.map((platform, index) => {
-            const count = articles.filter((article) => article.channels.some((channel) => channel.platform === platform.id)).length;
+            const count = platform.id === "site" ? articles.length : articles.filter((article) => article.channels.some((channel) => channel.platform === platform.id)).length;
             const selected = active === platform.id;
             return (
               <button
@@ -60,7 +60,7 @@ export function PublicationHub({
                 <span className="channel-index">0{index + 1}</span>
                 <strong>{platform.name}</strong>
                 <small>{platform.role}</small>
-                <b>{count.toString().padStart(2, "0")} 篇</b>
+                <b>{platform.syncStatus} · {count.toString().padStart(2, "0")} 篇</b>
               </button>
             );
           })}
@@ -82,23 +82,22 @@ export function PublicationHub({
 
         <div className="content-ledger" aria-live="polite">
           {visibleArticles.map((article, index) => (
-            <article className="content-entry" key={article.slug}>
+            <article className="content-entry" key={article.id}>
               <span className="entry-number">{(index + 1).toString().padStart(2, "0")}</span>
               <div className="entry-main">
-                <p>{article.date} · {article.readingTime}</p>
-                <Link href={`/writing/${article.slug}`}>
+                <p>{article.date} · {article.source}</p>
+                <a href={article.url} target="_blank" rel="noreferrer">
                   <h3>{article.title}</h3>
                   <span>{article.excerpt}</span>
-                </Link>
+                </a>
                 <ul className="entry-tags">{article.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
               </div>
               <div className="entry-channels" aria-label="发布渠道">
                 {article.channels.map((channel) => {
                   const platform = platformById.get(channel.platform);
                   if (!platform) return null;
-                  if (channel.platform === "site") return <Link key={channel.platform} href={`/writing/${article.slug}`}>{platform.shortName}<i>↗</i></Link>;
                   if (channel.url) return <a key={channel.platform} href={channel.url} target="_blank" rel="noreferrer">{platform.shortName}<i>↗</i></a>;
-                  return <span key={channel.platform} title="已发布，外部链接待录入">{platform.shortName}<i>✓</i></span>;
+                  return <span key={channel.platform} title="已发布，公开链接待绑定">{platform.shortName}<i>待绑定</i></span>;
                 })}
               </div>
             </article>
