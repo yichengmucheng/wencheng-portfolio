@@ -210,6 +210,14 @@ body { background:#07090b; color:var(--ink); }
 
 .page-intro { padding-top:45px; }.page-section { min-height:700px;padding-top:175px;background:linear-gradient(180deg,#101318,#090b0e 45%); }.page-section > .project-list .project-card:first-child { grid-column:1/-1; }
 .case-study,.essay { background:#090b0e;color:#f3f5f2; }.case-hero { padding-top:155px;border-color:var(--line);background:radial-gradient(circle at 80% 30%,rgba(94,124,255,.14),transparent 32%),linear-gradient(180deg,#11151a,#0a0c0f); }.back-link { color:#82908c; }.case-summary,.case-section p { color:#9eaaa7; }.case-meta span { color:#74807d; }.case-hero .visual-window { border-radius:26px;box-shadow:0 35px 90px rgba(0,0,0,.55); }.case-section { border-color:var(--line);background:#090b0e; }.case-section:nth-child(odd) { background:#0d1014; }.case-section h2 { color:#9ae3d0; }.decision-list,.decision-list article,.evidence-list li { border-color:var(--line); }.decision-list dd { color:#a5afad; }.flow > div div { border-color:var(--line);background:rgba(255,255,255,.025); }.metrics-large { border-color:var(--line);border-radius:18px;overflow:hidden;background:rgba(255,255,255,.03); }.metrics-large div { border-color:var(--line); }.case-section blockquote { color:#e5eae7; }.confidentiality { border:1px solid rgba(148,228,205,.15);border-radius:16px;background:rgba(93,180,156,.08); }.next-case { border-color:rgba(255,255,255,.22); }
+.case-demo { margin:0 0 55px;padding:18px;border:1px solid rgba(255,255,255,.14);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));box-shadow:0 24px 70px rgba(0,0,0,.3); }
+.case-demo-head { display:grid;grid-template-columns:minmax(220px,.75fr) minmax(280px,1fr);gap:35px;align-items:end;padding:12px 10px 20px; }
+.case-demo-head span { display:block;margin-bottom:9px;color:#d7a16e;font:9px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.12em; }
+.case-demo-head h3 { margin:0;font-family:"Noto Serif SC","Songti SC",serif;font-size:22px; }
+.case-demo-head p { margin:0;font-size:11px;line-height:1.8; }
+.case-demo video { display:block;width:100%;aspect-ratio:30 / 19;border:1px solid rgba(255,255,255,.12);border-radius:15px;background:#050607;object-fit:contain; }
+.case-demo > a { display:inline-block;margin:14px 9px 2px;color:#9ae3d0;font-size:10px; }
+.case-demo > a:hover { color:#e9f7f3; }
 
 .lab-grid { border:0;gap:18px; }.lab-card { min-height:360px;border:1px solid rgba(255,255,255,.12);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.02)); }.lab-card:nth-child(2) { background:linear-gradient(145deg,rgba(117,100,255,.15),rgba(255,255,255,.02)); }.lab-card:nth-child(3) { background:linear-gradient(145deg,rgba(38,192,151,.13),rgba(255,255,255,.02)); }.lab-card:hover { background:rgba(255,255,255,.1); }.lab-card h2 { color:#eef2ef; }.lab-card small { color:#96a19f; }.lab-card em { color:#aad8ca;background:rgba(119,211,184,.1); }.lab-callout { border:1px solid rgba(255,255,255,.13);border-radius:24px;background:linear-gradient(110deg,#151d1b,#121620); }
 .writing-list { border-color:var(--line); }.writing-list > a { border-color:var(--line);border-radius:18px; }.writing-list > a:hover { background:rgba(255,255,255,.06); }.writing-list h2 { color:#eef2ef; }.writing-list small { color:#99a4a1; }.writing-list li { border-color:rgba(255,255,255,.2); }
@@ -236,6 +244,7 @@ body { background:#07090b; color:var(--ink); }
   .project-list { grid-template-columns:1fr; }.project-card,.project-card:first-child { min-height:560px; }.project-card:first-child .visual-link,.visual-link { min-height:300px;padding:14px; }.project-card:first-child .project-copy,.project-copy { padding:28px 24px; }.metric-row { gap:8px; }.metric-row strong { font-size:16px; }
   .method-section { border-radius:24px; }.article-grid { gap:12px; }.article-card { border-radius:20px; }
   .page-intro { padding-top:20px; }.case-hero { padding-top:145px; }.case-hero .visual-window { border-radius:18px; }.case-section:nth-child(odd) { background:#0d1014; }
+  .case-demo { margin-left:-2vw;margin-right:-2vw;padding:10px;border-radius:18px; }.case-demo-head { grid-template-columns:1fr;gap:12px;padding:10px 6px 16px; }.case-demo-head h3 { font-size:18px; }.case-demo video { border-radius:11px; }
   .lab-grid { grid-template-columns:1fr; }.lab-card { border-radius:20px; }.lab-callout { border-radius:20px; }
   .about-hero { padding-top:0; }.site-footer { margin:10px;border-radius:24px; }
 }
