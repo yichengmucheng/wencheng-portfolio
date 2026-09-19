@@ -5,6 +5,32 @@ import { ProjectVisual } from "@/components/project-visual";
 import { AgentHubCase } from "@/components/agent-hub-case";
 import { getProject, projects } from "@/lib/content";
 
+const projectDemos: Record<string, {
+  duration: string;
+  title: string;
+  description: string;
+  video: string;
+  poster: string;
+  label: string;
+}> = {
+  "structured-model-platform": {
+    duration: "09:00",
+    title: "结构化模型平台完整演示",
+    description: "真实产品录屏，展示模型配置、样本选择、应用推理、效果评估与发布链路。建议全屏观看。",
+    video: "/media/structured-model-demo.mp4",
+    poster: "/media/structured-model-demo-poster.jpg",
+    label: "结构化模型生产与交付平台演示视频",
+  },
+  "industrial-rag-agent": {
+    duration: "03:39",
+    title: "工业故障知识库与诊断 Agent 产品演示",
+    description: "真实产品录屏，展示工业资料入库、切片配置、知识图谱、检索问答与知识比对等完整能力。建议全屏观看。",
+    video: "/media/industrial-rag-agent-demo.mp4",
+    poster: "/media/industrial-rag-agent-demo-poster.jpg",
+    label: "工业故障知识库与诊断 Agent 产品演示视频",
+  },
+};
+
 export function generateStaticParams() { return projects.map(({ slug }) => ({ slug })); }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -17,6 +43,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
   if (!project) notFound();
   const current = projects.findIndex((item) => item.slug === project.slug);
   const next = projects[(current + 1) % projects.length];
+  const demo = projectDemos[project.slug];
 
   return <article className={`case-study case-${project.visual}`}>
     <header className="case-hero">
@@ -31,16 +58,16 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
     <section className="case-section"><div className="case-section-head"><h2>02<br />关键决策</h2><p>比产出清单更重要的，是这些选择为何成立。</p></div><div className="decision-list">{project.decisions.map((decision, index) => <article key={decision.title}><span>0{index + 1}</span><div><h3>{decision.title}</h3><dl><dt>问题</dt><dd>{decision.problem}</dd><dt>选择</dt><dd>{decision.choice}</dd><dt>结果</dt><dd>{decision.result}</dd></dl></div></article>)}</div></section>
     <section className="case-section split"><h2>03<br />产品链路</h2><div className="flow"><div>{project.flow.map((step, index) => <div key={step}><span>{String(index + 1).padStart(2, "0")}</span><b>{step}</b></div>)}</div><p>链路中的每一步都有输入、产物和验收标准，使团队能定位问题并独立复现结果。</p></div></section>
     <section className="case-section split"><h2>04<br />验证证据</h2><div>
-      {project.slug === "structured-model-platform" && <div className="case-demo">
+      {demo && <div className="case-demo">
         <div className="case-demo-head">
-          <div><span>PRODUCT DEMO · 09:00</span><h3>结构化模型平台完整演示</h3></div>
-          <p>真实产品录屏，展示模型配置、样本选择、应用推理、效果评估与发布链路。建议全屏观看。</p>
+          <div><span>PRODUCT DEMO · {demo.duration}</span><h3>{demo.title}</h3></div>
+          <p>{demo.description}</p>
         </div>
-        <video controls preload="metadata" playsInline poster="/media/structured-model-demo-poster.jpg" aria-label="结构化模型生产与交付平台演示视频">
-          <source src="/media/structured-model-demo.mp4" type="video/mp4" />
+        <video controls preload="metadata" playsInline poster={demo.poster} aria-label={demo.label}>
+          <source src={demo.video} type="video/mp4" />
           当前浏览器不支持在线播放，请使用下方链接打开视频。
         </video>
-        <a href="/media/structured-model-demo.mp4" target="_blank" rel="noreferrer">在新窗口打开视频 ↗</a>
+        <a href={demo.video} target="_blank" rel="noreferrer">在新窗口打开视频 ↗</a>
       </div>}
       <ul className="evidence-list">{project.evidence.map((item) => <li key={item}>{item}</li>)}</ul><div className="metrics-large">{project.metrics.map((metric) => <div key={metric.label}><strong>{metric.value}</strong><span>{metric.label}</span>{metric.note && <small>{metric.note}</small>}</div>)}</div>
     </div></section>
