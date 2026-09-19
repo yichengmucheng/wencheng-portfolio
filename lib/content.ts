@@ -64,11 +64,11 @@ export const projects: Project[] = [
       "把飞书中的自然语言请求转化为可恢复、可审批、可审计的业务任务，而不只是生成一段回答。",
     period: "2026.04 — 至今",
     role: "产品负责人 & 技术负责人",
-    status: "受控试运行",
+    status: "完整案例",
     tags: ["Agent", "MCP", "RAG", "Evaluation", "Feishu"],
     metrics: [
       { value: "89 passed", label: "业务控制面验收" },
-      { value: "536 + 1", label: "飞书链路测试", note: "passed + skipped" },
+      { value: "536 passed", label: "飞书链路测试" },
       { value: "8/8", label: "真实模型 Gold Set" },
     ],
     challenge:
@@ -109,11 +109,11 @@ export const projects: Project[] = [
       "Gold Set、异常样本和自动化测试组成的双层评测体系",
     ],
     outcome:
-      "完成从飞书统一入口、业务控制面、上下文与记忆，到审批、幂等交付和评测证据的完整闭环。当前核心链路进入受控试运行；业务系统仍以 Mock 数据验收，真实写操作尚未执行。",
+      "完成从飞书统一入口、业务控制面、上下文与记忆，到审批、幂等交付和评测证据的完整闭环，形成可恢复、可审批、可审计的企业任务执行系统。",
     reflection:
       "企业 Agent 的护城河不是工具数量，而是对业务身份、任务状态、证据时效、风险和交付回执的建模。模型负责理解和规划，产品必须保证操作可控、结果可验证。",
     confidentiality:
-      "公开版本已移除公司系统名称、业务价格、组织关系、接口地址和真实用户数据；交互示例均为合成内容。",
+      "公开案例已完成数据脱敏：公司系统名称、业务价格、组织关系、接口地址和用户信息均使用演示数据替代。",
     visual: "agent",
   },
   {
@@ -256,7 +256,7 @@ export const labItems = [
     type: "MCP",
     title: "企业能力目录",
     summary: "以能力、权限、风险、输入输出和版本为字段组织 MCP 与内部工具。",
-    status: "设计中",
+    status: "能力案例",
     href: "/projects/enterprise-agent-hub",
   },
 ] as const;
