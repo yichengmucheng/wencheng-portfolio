@@ -9,7 +9,7 @@ export function SiteFooter() {
       </div>
       <div className="footer-links">
         <Link href="/projects">项目</Link>
-        <Link href="/writing">写作</Link>
+        <Link href="/writing">内容</Link>
         <Link href="/about">关于</Link>
         <a href="/resume-wencheng.pdf" target="_blank" rel="noreferrer">简历</a>
       </div>

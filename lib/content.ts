@@ -6,6 +6,29 @@ export type Decision = {
   result: string;
 };
 
+export type PublicationPlatformId = "site" | "wechat" | "xiaohongshu" | "csdn" | "zhihu";
+
+export type PublicationPlatform = {
+  id: PublicationPlatformId;
+  name: string;
+  shortName: string;
+  role: string;
+  accent: string;
+};
+
+export type ArticleChannel = {
+  platform: PublicationPlatformId;
+  url?: string;
+};
+
+export const publicationPlatforms: PublicationPlatform[] = [
+  { id: "site", name: "木成智序", shortName: "智序", role: "完整原文与统一索引", accent: "mint" },
+  { id: "wechat", name: "微信公众号", shortName: "微信", role: "深度长文与系列沉淀", accent: "green" },
+  { id: "xiaohongshu", name: "小红书", shortName: "小红书", role: "图文卡片与观点摘要", accent: "red" },
+  { id: "csdn", name: "CSDN", shortName: "CSDN", role: "技术实践与工程复盘", accent: "orange" },
+  { id: "zhihu", name: "知乎", shortName: "知乎", role: "问题拆解与观点讨论", accent: "blue" },
+];
+
 export type Project = {
   slug: string;
   index: string;
@@ -208,6 +231,13 @@ export const articles = [
     date: "2026.09",
     readingTime: "6 分钟",
     tags: ["Agent", "安全", "产品设计"],
+    channels: [
+      { platform: "site" },
+      { platform: "wechat" },
+      { platform: "xiaohongshu" },
+      { platform: "csdn" },
+      { platform: "zhihu" },
+    ] satisfies ArticleChannel[],
     intro: "当 Agent 开始发消息、创建任务或修改文档时，错误不再只是一次坏回答，而可能成为真实业务事故。",
     sections: [
       { heading: "Prompt 不是安全边界", body: "模型可以理解规则，却不适合成为权限与执行状态的唯一真相源。重试、参数变化和提示注入都可能让一句“请先确认”失效。" },
@@ -222,6 +252,7 @@ export const articles = [
     date: "2026.08",
     readingTime: "5 分钟",
     tags: ["RAG", "Evaluation", "知识库"],
+    channels: [{ platform: "site" }] satisfies ArticleChannel[],
     intro: "一个看起来正确的答案，可能来自错误文档、模型常识或偶然命中；一个错误答案，也可能是源文档缺失而不是模型能力不足。",
     sections: [
       { heading: "先判断知识是否存在", body: "评测应先确认目标事实是否被成功解析、切片并建立索引。知识未入库时，调 Prompt 没有意义。" },
@@ -236,6 +267,7 @@ export const articles = [
     date: "2026.07",
     readingTime: "7 分钟",
     tags: ["模型平台", "MLOps", "产品架构"],
+    channels: [{ platform: "site" }] satisfies ArticleChannel[],
     intro: "模型在训练环境表现正常，并不代表它在生产系统中会得到相同结果。最危险的错误通常发生在模型文件之外。",
     sections: [
       { heading: "模型文件缺少业务语义", body: "特征顺序、缺失值规则、正类定义、版本和概率到业务分的映射往往散落在代码或口头交接中。" },
@@ -282,4 +314,8 @@ export function getProject(slug: string) {
 
 export function getArticle(slug: string) {
   return articles.find((article) => article.slug === slug);
+}
+
+export function getPublicationPlatform(id: PublicationPlatformId) {
+  return publicationPlatforms.find((platform) => platform.id === id);
 }

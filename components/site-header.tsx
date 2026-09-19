@@ -7,7 +7,7 @@ const nav = [
   ["/", "首页"],
   ["/projects", "项目"],
   ["/lab", "Lab"],
-  ["/writing", "写作"],
+  ["/writing", "内容"],
   ["/about", "关于"],
 ] as const;
 

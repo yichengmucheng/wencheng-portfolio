@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ProjectCard } from "@/components/project-card";
-import { articles, projects } from "@/lib/content";
+import { articles, getPublicationPlatform, projects } from "@/lib/content";
 
 export default function Home() {
   return (
@@ -45,8 +45,8 @@ export default function Home() {
       </section>
 
       <section className="section writing-preview">
-        <div className="section-title-row"><div><p className="eyebrow">NOTES</p><h2>最近在写</h2></div><Link className="text-link" href="/writing">全部文章 →</Link></div>
-        <div className="article-grid">{articles.map((article) => <Link href={`/writing/${article.slug}`} key={article.slug} className="article-card"><p>{article.date} · {article.readingTime}</p><h3>{article.title}</h3><span>{article.excerpt}</span><b>阅读文章 →</b></Link>)}</div>
+        <div className="section-title-row"><div><p className="eyebrow">MUCHENG INTELLIGENCE REVIEW</p><h2>木成智序</h2></div><Link className="text-link" href="/writing">进入内容中心 →</Link></div>
+        <div className="article-grid">{articles.map((article) => <Link href={`/writing/${article.slug}`} key={article.slug} className="article-card"><p>{article.date} · {article.readingTime}</p><h3>{article.title}</h3><span>{article.excerpt}</span><small className="article-channel-mini">{article.channels.map((channel) => getPublicationPlatform(channel.platform)?.shortName).filter(Boolean).join(" · ")}</small><b>阅读文章 →</b></Link>)}</div>
       </section>
     </>
   );
