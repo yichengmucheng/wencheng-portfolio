@@ -57,24 +57,24 @@ export const projects: Project[] = [
   {
     slug: "enterprise-agent-hub",
     index: "01",
-    title: "企业级 Agent Hub",
-    shortTitle: "Agent Hub",
-    eyebrow: "Agent · MCP · 企业效率",
+    title: "MaaS 百事通｜企业任务型 Agent",
+    shortTitle: "MaaS 百事通",
+    eyebrow: "Agent · 飞书 · 企业任务",
     summary:
-      "将分散的业务机器人收敛为飞书统一入口，让 Agent 从回答问题升级为可恢复、可审批、可评测地完成任务。",
-    period: "2026.04 — 2026.08",
-    role: "AI 产品经理 · 产品与方案负责人",
+      "把飞书中的自然语言请求转化为可恢复、可审批、可审计的业务任务，而不只是生成一段回答。",
+    period: "2026.04 — 至今",
+    role: "产品负责人 & 技术负责人",
     status: "受控试运行",
     tags: ["Agent", "MCP", "RAG", "Evaluation", "Feishu"],
     metrics: [
-      { value: "200+", label: "目标内部用户" },
-      { value: "577", label: "核心自动化用例", note: "Gateway 与业务控制面核心测试" },
-      { value: "8/8", label: "真实模型业务评测" },
+      { value: "89 passed", label: "业务控制面验收" },
+      { value: "536 + 1", label: "飞书链路测试", note: "passed + skipped" },
+      { value: "8/8", label: "真实模型 Gold Set" },
     ],
     challenge:
-      "公司内部十余个系统各自提供机器人或查询入口，能力无法组合；长任务缺少持续执行、失败恢复和统一证据；价格查询、通知等操作又必须受权限和确认约束。",
+      "公司内部十余个业务系统让员工反复找入口、找字段和找负责人。传统聊天 Agent 能生成答案，却无法可靠回答：它代表谁操作、事实是否过期、谁批准了发送、失败后从哪里恢复。",
     roleDetail:
-      "我负责产品定位、场景优先级、长任务交互、能力边界和验收指标，并与研发共同把业务约束落实为任务状态、审批、幂等和评测机制。底层通用 Runtime 基于开源 Hermes Agent 扩展，业务控制面、飞书接入与企业工具为项目新增部分。",
+      "我负责产品定义、目标架构、业务控制面实现、安全治理和验收体系。底层通用 Runtime 基于开源 Hermes Agent 扩展；NormalizedEvent、Task/Evidence/Approval/Delivery、上下文组装、长期偏好记忆、飞书接入和企业能力目录为项目新增部分。",
     decisions: [
       {
         title: "用统一入口替代机器人孤岛",
@@ -94,6 +94,12 @@ export const projects: Project[] = [
         choice: "基于 Langfuse 建立任务、工具、知识与交付指标，把真实会话沉淀为 Gold Set 和异常样本。",
         result: "Prompt、工具描述、路由和兜底策略都有可重复回归依据，首批真实模型业务评测达到 8/8。",
       },
+      {
+        title: "让当前 Task 高于历史 Memory",
+        problem: "把全部会话和长期记忆直接注入 Prompt，会让旧价格、旧对象和历史默认值覆盖本轮任务，同时造成 Token 浪费。",
+        choice: "建立 Context Assembler，按当前实体、回复链、Task、Session、Memory 的权威顺序组装上下文；动态事实进入 Evidence，稳定偏好才进入长期记忆。",
+        result: "指代消解、任务恢复和上下文压缩都有确定依据；低优先级内容可舍弃并从权威存储按需重载。",
+      },
     ],
     flow: ["飞书请求", "身份与权限", "任务规划", "工具与 MCP", "风险确认", "证据交付", "评测迭代"],
     evidence: [
@@ -103,9 +109,9 @@ export const projects: Project[] = [
       "Gold Set、异常样本和自动化测试组成的双层评测体系",
     ],
     outcome:
-      "完成企业 Agent 从统一入口、工具接入到风险控制和评测闭环的产品化设计，并以受控试运行方式完成首批业务验收。",
+      "完成从飞书统一入口、业务控制面、上下文与记忆，到审批、幂等交付和评测证据的完整闭环。当前核心链路进入受控试运行；业务系统仍以 Mock 数据验收，真实写操作尚未执行。",
     reflection:
-      "企业 Agent 的护城河不是工具数量，而是对业务身份、任务状态、风险和证据的建模。模型负责理解和规划，产品必须保证操作可控、结果可验证。",
+      "企业 Agent 的护城河不是工具数量，而是对业务身份、任务状态、证据时效、风险和交付回执的建模。模型负责理解和规划，产品必须保证操作可控、结果可验证。",
     confidentiality:
       "公开版本已移除公司系统名称、业务价格、组织关系、接口地址和真实用户数据；交互示例均为合成内容。",
     visual: "agent",

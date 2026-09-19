@@ -9,6 +9,7 @@ export type PublishedArticle = {
   url: string;
   tags: string[];
   channels: ArticleChannel[];
+  relatedProject?: { href: string; label: string };
 };
 
 const CSDN_RSS_URL = "https://blog.csdn.net/2402_82548201/rss/list";
@@ -29,6 +30,7 @@ const verifiedFallback: PublishedArticle[] = [
       { platform: "csdn", url: "https://blog.csdn.net/2402_82548201/article/details/166013332" },
       { platform: "zhihu" },
     ],
+    relatedProject: { href: "/projects/enterprise-agent-hub", label: "查看 MaaS 百事通完整项目案例" },
   },
   {
     id: "csdn-151661938",
@@ -112,6 +114,9 @@ function parseCsdnRss(xml: string): PublishedArticle[] {
       url,
       tags: inferTags(title, excerpt),
       channels: channelsFor(articleId, url),
+      relatedProject: articleId === CROSS_POSTED_ARTICLE_ID
+        ? { href: "/projects/enterprise-agent-hub", label: "查看 MaaS 百事通完整项目案例" }
+        : undefined,
     };
   }).filter((article) => article.title && article.url);
 }

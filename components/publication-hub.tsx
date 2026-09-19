@@ -12,6 +12,7 @@ type HubArticle = {
   url: string;
   tags: readonly string[];
   channels: readonly ArticleChannel[];
+  relatedProject?: { href: string; label: string };
 };
 
 type FilterId = "all" | PublicationPlatformId;
@@ -91,6 +92,7 @@ export function PublicationHub({
                   <span>{article.excerpt}</span>
                 </a>
                 <ul className="entry-tags">{article.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
+                {article.relatedProject && <a className="entry-case-link" href={article.relatedProject.href}>{article.relatedProject.label}<span>→</span></a>}
               </div>
               <div className="entry-channels" aria-label="发布渠道">
                 {article.channels.map((channel) => {
